@@ -83,50 +83,100 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+    Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Connexion')),
-      body: Padding(
+        appBar: AppBar(title: const Text('Connexion')),
+        body: Padding(
         padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormField(
-                controller: _emailCtrl,
-                decoration: const InputDecoration(labelText: 'Email'),
-                keyboardType: TextInputType.emailAddress,
-                validator: (v) {
-                  if (v == null || v.isEmpty) return 'Veuillez entrer un email';
-                  if (!v.contains('@')) return 'Email invalide';
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordCtrl,
-                decoration: const InputDecoration(labelText: 'Mot de passe'),
-                obscureText: true,
-                validator: (v) {
-                  if (v == null || v.isEmpty) return 'Veuillez entrer un mot de passe';
-                  if (v.length < 6) return 'Mot de passe trop court';
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              if (_errorMessage != null) ...[
-                Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
-                const SizedBox(height: 10),
-              ],
-              _isLoading
-                  ? const CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _login,
-                      child: const Text('Se connecter'),
+            Center(
+                child: Image.asset(
+                'assets/icons/logo.png', // chemin de ton logo
+                width: 100,
+                height: 100,
+                ),
+            ),
+            const SizedBox(height: 24),
+
+            // Le formulaire doit être dans la colonne !
+            Form(
+                key: _formKey,
+                child: Column(
+                mainAxisSize: MainAxisSize.min,  // ne prend pas toute la hauteur
+                crossAxisAlignment: CrossAxisAlignment.stretch, // bouton largeur max
+                children: [
+                    TextFormField(
+                    cursorColor: Colors.white,
+                    controller: _emailCtrl,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (v) {
+                        if (v == null || v.isEmpty) return 'Veuillez entrer un email';
+                        if (!v.contains('@')) return 'Email invalide';
+                        return null;
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white70),
+                        ),
                     ),
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                    cursorColor: Colors.white,
+                    controller: _passwordCtrl,
+                    obscureText: true,
+                    validator: (v) {
+                        if (v == null || v.isEmpty) return 'Veuillez entrer un mot de passe';
+                        if (v.length < 6) return 'Mot de passe trop court';
+                        return null;
+                    },
+                    decoration: const InputDecoration(
+                        labelText: 'Mot de passe',
+                        labelStyle: TextStyle(color: Colors.white70),
+                        focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white70),
+                        ),
+                    ),
+                    ),
+                    const SizedBox(height: 20),
+                    if (_errorMessage != null) ...[
+                    Text(_errorMessage!, style: const TextStyle(color: Colors.red)),
+                    const SizedBox(height: 10),
+                    ],
+                    ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF073FA0),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                            )
+                        : const Text('Se connecter'),
+                    ),
+                ],
+                ),
+            ),
             ],
-          ),
         ),
-      ),
+        ),
     );
-  }
+    }
+
+
+  
 }
