@@ -35,7 +35,7 @@ class _CinephoriaAppState extends State<CinephoriaApp> {
     });
   }
 
-  @override
+@override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cinephoria',
@@ -57,8 +57,17 @@ class _CinephoriaAppState extends State<CinephoriaApp> {
         ),
       ),
       home: _isLoggedIn
-          ? HomePage(userId: _userId!)
+          ? HomePage(
+              userId: _userId!,
+              onLogout: () {
+                setState(() {
+                  _isLoggedIn = false;
+                  _userId = null;
+                });
+              },
+            )
           : LoginPage(onLoginSuccess: _onLoginSuccess),
     );
   }
+
 }

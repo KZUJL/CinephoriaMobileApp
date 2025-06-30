@@ -7,12 +7,18 @@ import 'detail_page.dart';
 
 class HomePage extends StatefulWidget {
   final int userId;
+  final void Function() onLogout;
 
-  const HomePage({super.key, required this.userId});
+  const HomePage({
+    super.key,
+    required this.userId,
+    required this.onLogout,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 
 class _HomePageState extends State<HomePage> {
   late Future<List<Seance>> _futureSeances;
@@ -61,10 +67,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+    
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mes séances')),
+        appBar: AppBar(
+            title: const Text('Mes séances'),
+            actions: [
+                IconButton(
+                icon: const Icon(Icons.logout),
+                tooltip: 'Déconnexion',
+                onPressed: () {
+                    widget.onLogout(); // Appelle la fonction du parent
+                },
+                ),
+            ],
+            ),
+
+
       body: FutureBuilder<List<Seance>>(
         future: _futureSeances,
         builder: (context, snapshot) {
